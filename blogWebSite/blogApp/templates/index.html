@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block 'main' %}
+
+<!-- ROW 2 STARTS -->
+<div class="container col-md-6 p-5 mt-5" style="background-color: #ebee92;">
+    <div class="card">
+        <div class="card-header text-center">
+            BlogWorld User
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">BLOGWORLD</h5>
+            <p class="card-text">Welcome to BlogWorld</p>
+            <textarea class="form-control" id="textarea" rows="1">Do You want to write a Blog</textarea>
+            <a href="{% url 'create_blog' %}" class="btn btn-primary mt-3">Create Blog</a>
+        </div>
+    </div>
+    {% for blog_entry in blog_entries %}
+    <div class="card mt-5">
+        <div class="card-header text-center">
+            {{ blog_entry.author.first_name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ blog_entry.topic_name }}</h5>
+            <p class="card-text">{{ blog_entry.blog_script }}</p>
+            <a href="{% url 'edit_blog' blog_entry.id %}" class="btn btn-outline-success mt-3">Edit Blog</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<!-- ROW 2 ENDS -->
+{% endblock 'main' %}

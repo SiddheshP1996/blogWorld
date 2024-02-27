@@ -1,0 +1,23 @@
+body {
+    background-color: #ebee92;
+}
+
+main {
+    flex: 1;
+}
+
+.container .row div nav .container-fluid ul li a:hover{
+    color: #8111ea;
+}
+
+.anchor {
+    text-decoration: none;
+}
+
+.container .row:nth-child(1) p a {
+    color: #8d08e6;
+}
+
+.container .row:nth-child(1) p a:hover {
+    color: #bd6bfc;
+}

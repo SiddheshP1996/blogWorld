@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static './asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static './asset/css/style.css' %}">
+    <title>BlogWorld | {% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <!-- NAVBAR STARTS -->
+    <div class="container">
+        <div class="row">
+            <!-- ROW 1 STARTS -->
+            <div class="col-md-12">
+                <nav class="navbar fixed-top navbar-expand-lg" style="background-color: aquamarine;">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/">BlogWorld</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{% url 'blog-home' %}" style="font-size: large;">HOME</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'blog-about' %}" style="font-size: large;">ABOUT</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'blog-category' %}" style="font-size: large;">TOPICS</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="justify-content-end collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'user-contact' %}" style="font-size: large;">CONTACT</a>
+                                </li>
+                                {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'user-profile' %}" title="Profile" style="font-size: large;"><i class="bi bi-person-circle"></i></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'user-logout' %}" title="Logout" style="font-size: large;"><i class="bi bi-box-arrow-left"></i></a>
+                                </li>
+                                {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'user-login' %}" style="font-size: large;">LOGIN</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'user-register' %}" style="font-size: large;">REGISTER</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- ROW 1 ENDS -->
+        </div>
+    </div>
+
+    {% block 'main' %}
+
+    {% endblock 'main' %}
+
+    <!-- ROW 3 STARTS -->
+    <footer>
+        <div class="container pt-3">
+            <div class="row mt-5">
+                <div class="col-md-4 text-center">
+                    <h5>Address</h5>
+                    <hr>
+                    Plot Number, Landmark, Area, <br>
+                    Road, City, <br>
+                    Country. <br>
+                    Pin-Code : xxx-xxx, <br>
+                    <p>Contact Number : xxx-xxx-xxxx</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h5>Quick Links</h5>
+                    <hr>
+                    <p><a href="{% url 'blog-home' %}" class="anchor">HOME</a></p>
+                    <p><a href="{% url 'blog-about' %}" class="anchor">ABOUT US</a></p>
+                    <p><a href="{% url 'blog-category' %}" class="anchor">TOPICS</a></p>
+                    <p><a href="{% url 'user-contact' %}" class="anchor">CONTACT</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h5 style="text-align: center;">Connect Us</h5>
+                    <hr>
+                    <div style="display: flex; justify-content: center;">
+                        <h5 style="margin-right: 20px;">
+                            <a href="https://www.facebook.com" target="_blank" style="color: #3b5998; text-decoration: none;">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                        </h5>
+                        <h5 style="margin-right: 20px;">
+                            <a href="https://www.instagram.com" target="_blank" style="color: #e4405f; text-decoration: none;">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                        </h5>
+                        <h5 style="margin-right: 20px;">
+                            <a href="https://www.twitter.com" target="_blank" style="color: #1da1f2; text-decoration: none;">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                        </h5>
+                        <h5 style="margin-right: 20px;">
+                            <a href="https://in.linkedin.com" target="_blank" style="color: #0077b5; text-decoration: none;">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                        </h5>
+                        <h5>
+                            <a href="https://github.com" target="_blank" style="color: #333; text-decoration: none;">
+                                <i class="bi bi-github"></i>
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ROW 3 ENDS -->
+    <script src="{% static './asset/js/bootstrap.min.js' %}"></script>
+    <script src="{% static './asset/js/main.js' %}"></script>
+</body>
+
+</html>

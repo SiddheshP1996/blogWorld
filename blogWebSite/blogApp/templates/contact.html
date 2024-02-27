@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact{% endblock title %}
+
+{% block 'main' %}
+
+<!-- ROW 2 STARTS -->
+<div class="container mt-5 pt-5">
+    <div class="p-3 shadow row mx-auto col-md-5 bg-dark-subtle rounded-4">
+        {% if errormessage %}
+        <div class="alert alert-danger">
+            {{ errormessage }}
+        </div>
+        {% endif %}
+        <form action="{% url 'send_user_email' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="input1" class="form-label"><strong> Name : </strong></label>
+                <input type="text" class="form-control" id="input1" name="fullname" placeholder="Your Name">
+            </div>
+            <div class="mb-3">
+                <label for="input2" class="form-label"><strong> Email Address : </strong></label>
+                <input type="email" class="form-control" id="input2" name="useremail" placeholder="sample@email.com">
+            </div>
+            <div class="mb-3">
+                <label for="input3" class="form-label"><strong> Contact Number : </strong></label>
+                <input type="tel" class="form-control" name="usercontact" id="input3">
+            </div>
+            <div class="mb-3">
+                <label for="textarea1" class="form-label"><strong> Message : </strong></label>
+                <textarea class="form-control" id="textarea1" name="usermessage" rows="4"
+                    placeholder="Suggest upto 200 characters"></textarea>
+            </div>
+            <div class="mb-3 text-center">
+                <input type="submit" class="btn btn-success" value="Submit">
+            </div>
+            {% if success %}
+            <div class="alert alert-success">
+                {{ success }}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+<!-- ROW 2 ENDS -->
+{% endblock 'main' %}

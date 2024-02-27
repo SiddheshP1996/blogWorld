@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+
+{% block 'main' %}
+
+
+<!-- ROW 2 STARTS -->
+<div class="container pt-5">
+    <div class="row mt-5 mb-5">
+        <div class="col-md-4 shadow mt-5 p-4 mx-auto bg-info-subtle rounded-4">
+            <!-- <h2 style="text-align: center;">Registration</h2> -->
+            <h2 class="text-center">Login</h2>
+            {% if errormessage %}
+                <div class="alert alert-danger">
+                    {{errormessage}}
+                </div>
+            {% endif %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="Input1" class="form-label"><strong> Username : </strong></label>
+                    <input type="email" class="form-control" id="Input1" name="username" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="Input2" class="form-label"><strong> Password : </strong></label>
+                    <input type="password" class="form-control" id="Input2" name="userpassword" placeholder="Enter Password">
+                </div>
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-danger" value="Login">
+                    Not a User? <a href="/register" style="text-decoration: none;">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- ROW 2 ENDS -->
+{% endblock 'main' %}

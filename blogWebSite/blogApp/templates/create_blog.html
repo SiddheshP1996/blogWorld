@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Blog{% endblock title %}
+
+{% block 'main' %}
+
+<!-- ROW 2 STARTS -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 pt-5">
+            <form id="blogForm" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-md-10 mb-3">
+                    <label for="exampleInput1" class="form-label"><strong> Topic Name </strong></label>
+                    <input type="text" class="form-control" name="topicname" id="exampleInput1"
+                        placeholder="Lorem ipsum Voluptatem">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="exampleInput2" class="form-label"><strong> Date of Creation </strong></label>
+                    <input type="date" class="form-control" name="dateofcreation" id="exampleInput2">
+                </div>
+                <div class="col-md-10 mb-3">
+                    <label for="exampleTextarea1" class="form-label"><strong> Add Topic Content </strong></label>
+                    <textarea class="form-control" name="blogscript" id="exampleTextarea1" rows="5"
+                        placeholder="Add Your Topic Views"></textarea>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-outline-success">Submit Blog</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static './asset/images/blog-2.jpg' %}" class="rounded float-end" width="90%" alt="...">
+        </div>
+    </div>
+</div>
+<!-- ROW 2 ENDS -->
+
+<script>
+    document.getElementById('blogForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        var formData = new FormData(this);
+
+        fetch("{% url 'submit_blog' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}' // Set CSRF token
+            }
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(function (data) {
+                // Success!
+                console.log(data);
+                // Optionally, clear the form fields
+                document.getElementById('blogForm').reset();
+            })
+            .catch(function (error) {
+                // Error
+                console.error('There was a problem with the fetch operation:', error.message);
+            });
+    });
+</script>
+{% endblock 'main' %}

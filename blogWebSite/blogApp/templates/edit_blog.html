@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Blog{% endblock title %}
+
+{% block 'main' %}
+
+<!-- ROW 2 STARTS -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 pt-5">
+            <form method="post" action="{% url 'update_blog' blog_entry.id %}">
+                {% csrf_token %}
+                <div class="col-md-10 mb-3">
+                    <label for="exampleInput1" class="form-label"><strong> Topic Name </strong></label>
+                    <input type="text" class="form-control" name="topicname" id="exampleInput1"
+                        placeholder="Lorem ipsum Voluptatem" value="{{ blog_entry.topic_name }}">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="exampleInput3" class="form-label"><strong> Date of Creation </strong></label>
+                    <input type="date" class="form-control" name="dateofcreation" id="exampleInput3"
+                        value="{{ blog_entry.date_of_creation|date:'Y-m-d' }}">
+                </div>
+                <div class="col-md-10 mb-3">
+                    <label for="exampleTextarea2" class="form-label"><strong> Add Topic Content </strong></label>
+                    <textarea class="form-control" name="blogscript" id="exampleTextarea2" rows="5"
+                        placeholder="Add Your Topic Views">{{ blog_entry.blog_script }}</textarea>
+                </div>
+                <!-- Update and Delete buttons -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#updateModal">Update Blog</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal">Delete Blog</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 pt-5">
+            <img src="{% static './asset/images/blog-2.jpg' %}" class="rounded float-end" width="90%" alt="...">
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    {% if request.user.is_authenticated and request.user == blog_entry.author %}
+    <!-- Delete Blog Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Blog</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this blog?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form method="post" action="{% url 'delete_blog' blog_entry.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- ROW 2 ENDS -->
+{% endblock 'main' %}
