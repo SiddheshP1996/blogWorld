@@ -257,7 +257,7 @@ def send_user_email(request):
             send_mail(
                 "Contact Query From User",
                 f"Name: {fullname}\nEmail: {useremail}\nContact Number: {usercontact}\nMessage: {usermessage}",
-                "amazingsiddhesh@gmail.com",
+                "yourname@example.com",
                 [useremail],  # Replace with your default email address
                 fail_silently=False,
             )
