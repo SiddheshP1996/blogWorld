@@ -41,14 +41,14 @@ DATABASES = {<br>
 &nbsp;&nbsp;}<br>
 }<br><br>
 
-8] For email integration make below changes in your settings.py file
-&nbsp;&nbsp;# EMAIL SETTINGS
-&nbsp;&nbsp;EMAIL_HOST = "smtp.gmail.com"
-&nbsp;&nbsp;EMAIL_HOST_USER = "yourname@example.com"
-&nbsp;&nbsp;EMAIL_HOST_PASSWORD = "YOUR-EMAIL-APP-PASSWORD"
-&nbsp;&nbsp;EMAIL_PORT = 587
-&nbsp;&nbsp;EMAIL_USE_TLS = True
-&nbsp;&nbsp;EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+8] For email integration make below changes in your settings.py file<br>
+&nbsp;&nbsp;# EMAIL SETTINGS<br>
+&nbsp;&nbsp;EMAIL_HOST = "smtp.gmail.com"<br>
+&nbsp;&nbsp;EMAIL_HOST_USER = "yourname@example.com"<br>
+&nbsp;&nbsp;EMAIL_HOST_PASSWORD = "YOUR-EMAIL-APP-PASSWORD"<br>
+&nbsp;&nbsp;EMAIL_PORT = 587<br>
+&nbsp;&nbsp;EMAIL_USE_TLS = True<br>
+&nbsp;&nbsp;EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"<br><br>
 
 9] First check whether the database is connected or not using 2 commands "**python manage.py makemigrations**" and "**python manage.py migrate**".
 <br><br>
