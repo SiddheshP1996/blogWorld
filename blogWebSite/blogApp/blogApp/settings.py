@@ -30,13 +30,12 @@ ALLOWED_HOSTS = []
 
 # Email Settings
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'yourname@example.com'
-EMAIL_HOST_PASSWORD = 'YOUR-EMAIL-APP-PASSWORD'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True  # Or False if not using TLS
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
+EMAIL_HOST_USER = 'amazingsiddhesh@gmail.com'
+EMAIL_HOST_PASSWORD = 'atzs ylrl fawp trzj'
 
 # Application definition
 
@@ -72,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.media',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -84,15 +84,15 @@ WSGI_APPLICATION = 'blogApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-"""
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -103,6 +103,7 @@ DATABASES = {
         'POST': '3306',
     }
 }
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -144,8 +145,8 @@ STATICFILES_DIRS = [
 ]
 
 # Media files (user-uploaded files)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

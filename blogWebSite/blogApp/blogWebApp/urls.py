@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from blogWebApp import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.home),
@@ -17,6 +18,7 @@ urlpatterns = [
     path('contact/', views.contact, name='user-contact'),
     path('register/', views.register, name='user-register'),
     path('login/', views.user_login, name='user-login'),
+    path('passwordreset/', views.reset_password, name='reset-password'),
     path('logout/', views.user_logout, name='user-logout'),
     path('sendmail/', views.send_user_email, name='send_user_email'),
 ]

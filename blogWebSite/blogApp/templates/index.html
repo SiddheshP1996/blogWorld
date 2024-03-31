@@ -8,23 +8,30 @@
 <div class="container col-md-6 p-5 mt-5" style="background-color: #ebee92;">
     <div class="card">
         <div class="card-header text-center">
-            BlogWorld User
+            <strong>blogWorld</strong>
         </div>
         <div class="card-body">
-            <h5 class="card-title">BLOGWORLD</h5>
-            <p class="card-text">Welcome to BlogWorld</p>
-            <textarea class="form-control" id="textarea" rows="1">Do You want to write a Blog</textarea>
-            <a href="{% url 'create_blog' %}" class="btn btn-primary mt-3">Create Blog</a>
+            <h5 class="card-title">blogWorld</h5>
+            <p class="card-text">Welcome to blogWorld</p>
+            <p class="form-control" id="textarea" rows="1">Do You want to write your own Blog?</p>
+            <a href="{% url 'create_blog' %}" class="btn btn-outline-primary mt-3">Create Blog</a>
         </div>
     </div>
     {% for blog_entry in blog_entries %}
     <div class="card mt-5">
+        {% if blog_entry.image %}
+        <img src="{{ blog_entry.image.url }}" class="card-img-top" alt="{{ blog_entry.topic_name }}">
+        {% endif %}
         <div class="card-header text-center">
-            {{ blog_entry.author.first_name }}
+            <strong>{{ blog_entry.author.first_name }}</strong>
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ blog_entry.topic_name }}</h5>
             <p class="card-text">{{ blog_entry.blog_script }}</p>
+            <small>
+                <p class="card-text"><strong>Last updated : </strong> {{ blog_entry.formatted_last_updated_at|safe }}
+                </p>
+            </small>
             <a href="{% url 'edit_blog' blog_entry.id %}" class="btn btn-outline-success mt-3">Edit Blog</a>
         </div>
     </div>

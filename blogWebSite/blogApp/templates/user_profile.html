@@ -9,7 +9,7 @@
     <h1 class="text-center">User Profile</h1>
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card bg-success-subtle">
                 <div class="card-header">
                     <h3>User Information</h3>
                 </div>
@@ -24,12 +24,15 @@
                         <img src="{% static 'asset/images/default.jpg' %}" alt="Default Image"
                             class="img-fluid rounded-circle mx-auto d-block mb-3" style="max-width: 200px;">
                         {% endif %}
-                        <label for="image">Change Profile Image :</label>
+                        <label for="image"><strong>Change Profile Image :</strong></label>
                         <input type="file" name="image" id="image">
-                        <button type="submit" class="btn btn-primary mt-3">Upload Image</button>
+                        <button type="submit" class="btn btn-outline-primary mt-3">Upload Image</button>
+                        <div class="mb-3">
+                            <strong>Update Password : </strong><a class="text-decoration-none text-danger" href="{% url 'reset-password' %}">Update Password </a>
+                        </div>
                     </form>
-                    <p><strong>Username:</strong> {{ username }}</p>
-                    <p><strong>Email:</strong> {{ email }}</p>
+                    <p><strong>Name :</strong> {{ name }}</p>
+                    <p><strong>Useremail :</strong> {{ email }}</p>
                     <!-- You can display additional user information here -->
                 </div>
             </div>
@@ -39,7 +42,7 @@
     <!-- Display user's blog entries -->
     <div class="row mt-5">
         <div class="col-md-8 offset-md-2">
-            <h2 class="text-center mb-4">Blogs Written by {{ username }}</h2>
+            <h2 class="text-center mb-4">Blogs Written by {{ name }}</h2>
             {% if user_blogs %}
             <ul class="list-group">
                 {% for blog_entry in user_blogs %}

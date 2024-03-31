@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import views as auth_views
 from django.core.mail import send_mail
 from django.contrib import messages
 from blogWebApp.models import ContactInfo, BlogEntry, UserProfile, BlogCategory
@@ -60,6 +61,31 @@ def user_login(request):
                 return render(request, 'login.html', context)
     else:
         return render(request, 'login.html', context)
+    
+def reset_password(request):
+    context = {}
+    if request.method == 'POST':
+        username = request.POST['username']
+        newpassword = request.POST['newpassword']
+        confirmnewpassword = request.POST['confirmnewpassword']
+        if username == "" or newpassword == "" or confirmnewpassword == "":
+            context['errormessage'] = "Fields Cannot be Empty"
+            return render(request, 'password_reset.html', context)
+        elif newpassword != confirmnewpassword:
+            context['errormessage'] = "Enter Same Password for both inputs"
+            return render(request, 'password_reset.html', context)
+        else:
+            try:
+                u = User.objects.get(username = username)
+                u.set_password(confirmnewpassword)
+                u.save()
+                context['success'] = "Password Updated Successfully !!"
+                return render(request, 'password_reset.html', context)
+            except Exception:
+                context['errormessage'] = "Enter Same Password for both inputs"
+                return render(request, 'password_reset.html', context)
+    else:
+        return render(request, 'password_reset.html', context)
 
 def user_logout(request):
     logout(request)
@@ -70,14 +96,22 @@ def about(request):
 
 def user_profile(request):
     if request.user.is_authenticated:
+        context = {
+            'form': form,
+            'name': name,
+            'email': email,
+            'user_profile': user_profile,
+            'user_blogs': user_blogs,
+            'profile_image': profile_image
+            }
         # Retrieve or create the UserProfile object for the current user
-        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+        user_profile, created = UserProfile.objects.get_or_create(user = request.user)
         
         # Fetch the user's blog entries
         user_blogs = BlogEntry.objects.filter(author=request.user)
         
         # Fetch other relevant user data (add more as needed)
-        username = request.user.username
+        name = request.user.first_name
         email = request.user.email
         profile_image = user_profile.image if user_profile.image else None
 
@@ -92,14 +126,7 @@ def user_profile(request):
         else:
             form = UserProfileForm(instance=user_profile)
 
-        return render(request, 'user_profile.html',{
-            'form': form,
-            'username': username,
-            'email': email,
-            'user_profile': user_profile,
-            'user_blogs': user_blogs,
-            'profile_image': profile_image
-            })
+        return render(request, 'user_profile.html', context)
     else:
         return redirect('user-login')  # Redirect to your login URL
 
@@ -255,10 +282,10 @@ def send_user_email(request):
 
             # Construct and send the email
             send_mail(
-                "Contact Query From User",
+                "Contact Query of User Submitted",
                 f"Name: {fullname}\nEmail: {useremail}\nContact Number: {usercontact}\nMessage: {usermessage}",
-                "yourname@example.com",
-                [useremail],  # Replace with your default email address
+                "useremail",
+                [amazingsiddhesh@gmail.com],  # Replace with your default email address
                 fail_silently=False,
             )
             return render(request, 'contact.html', {'success': 'Contact details submitted successfully !!'})
