@@ -285,7 +285,7 @@ def send_user_email(request):
                 "Contact Query of User Submitted",
                 f"Name: {fullname}\nEmail: {useremail}\nContact Number: {usercontact}\nMessage: {usermessage}",
                 "useremail",
-                [amazingsiddhesh@gmail.com],  # Replace with your default email address
+                [yourdefaultmail@email.com],  # Replace with your default email address
                 fail_silently=False,
             )
             return render(request, 'contact.html', {'success': 'Contact details submitted successfully !!'})
