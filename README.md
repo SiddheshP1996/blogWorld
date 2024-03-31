@@ -50,26 +50,28 @@ DATABASES = {<br>
 &nbsp;&nbsp;EMAIL_USE_TLS = True<br>
 &nbsp;&nbsp;EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"<br><br>
 
-9] First check whether the database is connected or not using 2 commands "**python manage.py makemigrations**" and "**python manage.py migrate**".
+9] In application views.py file make the changes in the send_user_email function i.e. change the defaultmail to your default mail
+![image](https://github.com/SiddheshP1996/blogWorld/assets/67057053/dd3a8a9a-6599-4f10-afae-d70d63c33e73)
 <br><br>
-10] In order to run the project execute the command "**python manage.py runserver**" inside the terminal. 
+10] First check whether the database is connected or not using 2 commands "**python manage.py makemigrations**" and "**python manage.py migrate**".
+<br><br>
+11] In order to run the project execute the command "**python manage.py runserver**" inside the terminal. 
 <br><br>
 ![image](https://github.com/SiddheshP1996/blogWorld/assets/67057053/91395239-d74e-4f21-8fdc-a5374356ac16)
-
 <br><br>
-11] Now as per the above image click on the link generated stating : "**Starting development server at http://127.0.0.1:8000/**" and start exploring the project and it's smooothness in it's dynamic nature of event handling.
+12] Now as per the above image click on the link generated stating : "**Starting development server at http://127.0.0.1:8000/**" and start exploring the project and it's smooothness in it's dynamic nature of event handling.
 <br><br>
-12] To stop the running/execution of project go to the terminal and type **ctrl + C**.
+13] To stop the running/execution of project go to the terminal and type **ctrl + C**.
 <br><br>
-13] Now inside the terminal execute the command **cd ..**, so as to exit the project working directory i.e. "**(envName) localDriveName:\folderName\blogWebSite\blogApp>cd..**".
+14] Now inside the terminal execute the command **cd ..**, so as to exit the project working directory i.e. "**(envName) localDriveName:\folderName\blogWebSite\blogApp>cd..**".
 <br><br>
-14] You will be directed to the folder location of "**(envName) localDriveName:\folderName\blogWebSite>**".
+15] You will be directed to the folder location of "**(envName) localDriveName:\folderName\blogWebSite>**".
 <br><br>
-15] Now to deactivate the virtual environment inside the terminal at current working dfirectory use the command **deactivate** i.e. "**(envName) localDriveName:\folderName\blogWebSite>deactivate**"
+16] Now to deactivate the virtual environment inside the terminal at current working dfirectory use the command **deactivate** i.e. "**(envName) localDriveName:\folderName\blogWebSite>deactivate**"
 <br><br>
-16] Now you will be taken out of the virtual environment to your noraml folder path i.e. **localDriveName:\blogWebSite>**
+17] Now you will be taken out of the virtual environment to your noraml folder path i.e. **localDriveName:\blogWebSite>**
 <br><br>
-17] Now to exit from the terminal execute the **exit** command then the terminal will be closed i.e. **localDriveName:\blogWebSite>exit**
+18] Now to exit from the terminal execute the **exit** command then the terminal will be closed i.e. **localDriveName:\blogWebSite>exit**
 <br><br>
 
 **Provide Your Valuable Feedback on the Project.**
