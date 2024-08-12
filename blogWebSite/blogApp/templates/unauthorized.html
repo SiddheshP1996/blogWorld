@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Forbidden{% endblock title %}
+
+{% block 'main' %}
+
+<!-- ROW 2 STARTS -->
+<div class="container mt-5 p-5 text-center address">
+    <h1 class="fs-1 pt-5">401: Un-Authorized</h1>
+    <p>You don't have permission to access this page.</p>
+    <a class="btn btn-outline-primary" href="{% url 'blog-home' %}">Return to the home page</a>
+</div>
+<style>
+    h1 {
+        color: #e74c3c;
+    }
+</style>
+
+<!-- ROW 2 ENDS -->
+{% endblock 'main' %}

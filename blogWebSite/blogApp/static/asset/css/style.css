@@ -1,23 +1,88 @@
 body {
-    background-color: #ebee92;
+    background-color: #67f7b8;
 }
 
 main {
     flex: 1;
 }
 
-.container .row div nav .container-fluid ul li a:hover{
-    color: #8111ea;
+nav {
+    background-color: #3ad7fe;
+}
+
+.container .row div nav .container-fluid ul li a:hover {
+    color: #7a11ea;
 }
 
 .anchor {
     text-decoration: none;
 }
 
+.address {
+    color: black;
+}
+
 .container .row:nth-child(1) p a {
-    color: #8d08e6;
+    color: black;
 }
 
 .container .row:nth-child(1) p a:hover {
-    color: #bd6bfc;
+    color: #b1540c;
+}
+
+.dark-mode {
+    background-color: #563c3c;
+    color: black;
+}
+
+.dark-mode nav {
+    background-color: #a1b9f6;
+}
+
+.dark-mode a {
+    color: black;
+}
+
+.dark-mode .container .row:nth-child(1) p a {
+    color: white;
+}
+
+.dark-mode .container .row:nth-child(1) p a:hover {
+    color: #b1540c;
+}
+
+.dark-mode hr {
+    border-top: 1px solid black;
+}
+
+.dark-mode .anchor {
+    color: black;
+}
+
+.dark-mode .card {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.dark-mode .card-header {
+    background-color: #495057;
+    color: #ffffff;
+}
+
+.dark-mode .btn-outline-primary {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.dark-mode .btn-outline-success {
+    border-color: #28a745;
+    color: #ffffff;
+}
+
+.dark-mode .address {
+    color: white;
+}
+
+.dark-mode footer .address {
+    color: white;
 }

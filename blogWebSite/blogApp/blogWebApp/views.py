@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.models import User
@@ -10,12 +11,15 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm, BlogForm
 
+from newsapi import NewsApiClient
+
 def home(request):
     if request.method == 'GET':
         blog_entries = BlogEntry.objects.all().select_related('author')
         return render(request, 'index.html', {'blog_entries': blog_entries})
     else:
-        return HttpResponse("Method not allowed", status=405)
+        return render(request, 'methodnotallowed.html')
+        # return HttpResponse("Method not allowed", status=405)
 
 def register(request):
     context = {}
@@ -96,14 +100,6 @@ def about(request):
 
 def user_profile(request):
     if request.user.is_authenticated:
-        context = {
-            'form': form,
-            'name': name,
-            'email': email,
-            'user_profile': user_profile,
-            'user_blogs': user_blogs,
-            'profile_image': profile_image
-            }
         # Retrieve or create the UserProfile object for the current user
         user_profile, created = UserProfile.objects.get_or_create(user = request.user)
         
@@ -125,6 +121,16 @@ def user_profile(request):
                 profile_image = user_profile.image if user_profile.image else None
         else:
             form = UserProfileForm(instance=user_profile)
+            
+        # Now that all variables are defined, they can be added to the context
+        context = {
+            'form': form,
+            'name': name,
+            'email': email,
+            'user_profile': user_profile,
+            'user_blogs': user_blogs,
+            'profile_image': profile_image
+            }
 
         return render(request, 'user_profile.html', context)
     else:
@@ -132,8 +138,44 @@ def user_profile(request):
 
 
 def blog_category(request):
-    return render(request, 'blog_category.html')
+    api = NewsApiClient(api_key='424c7dabac204adab6e34bf9968a5d65')
+    api.get_sources()
+    # News API endpoint for top headlines
+    api_url = 'https://newsapi.org/v2/top-headlines'
+    api_key = '424c7dabac204adab6e34bf9968a5d65'  # Replace with your News API key
 
+    # Define the categories manually as the News API does not have an explicit category endpoint
+    categories = [
+        {'name': 'Business', 'description': 'Stay updated with business news, trends, and market analysis.', 'endpoint': 'business'},
+        {'name': 'Entertainment', 'description': 'Get the latest entertainment news, celebrity gossip, and more.', 'endpoint': 'entertainment'},
+        {'name': 'Health', 'description': 'Read about health trends, medical news, and wellness tips.', 'endpoint': 'health'},
+        {'name': 'Science', 'description': 'Discover the latest in scientific research and discoveries.', 'endpoint': 'science'},
+        {'name': 'Sports', 'description': 'Follow sports news, scores, and updates from around the world.', 'endpoint': 'sports'},
+        {'name': 'Technology', 'description': 'Explore tech news, reviews, and innovations in the tech world.', 'endpoint': 'technology'},
+    ]
+
+    # Iterate over the categories to fetch articles for each
+    for category in categories:
+        params = {
+            'category': category['endpoint'],
+            'country': 'us',  # You can change the country as needed
+            'apiKey': api_key
+        }
+        try:
+            response = requests.get(api_url, params=params)
+            response.raise_for_status()
+            articles = response.json().get('articles', [])
+            # Store the first article link as the "Read more" link for simplicity
+            category['link'] = articles[0]['url'] if articles else '#'
+        except requests.exceptions.RequestException as e:
+            category['link'] = '#'
+            print(f"Error fetching articles for {category['name']}: {e}")
+
+    context = {
+        'categories': categories
+    }
+
+    return render(request, 'blog_category.html', context)
 
 def create_blog(request):
     if request.user.is_authenticated:
@@ -165,10 +207,12 @@ def edit_blog(request, blog_id):
             return render(request, 'edit_blog.html', {'blog_entry': blog_entry})
         else:
             # Return an unauthorized error if the current user is not the author
-            return HttpResponse('Unauthorized', status=401)
+            return render(request, 'unauthorized.html')
+            # return HttpResponse('Unauthorized', status=401)
     else:
         messages.error(request, "You need to log in to create a blog.")
-        return HttpResponse('Unauthorized', status=401)
+        return render(request, 'unauthorized.html')
+        # return HttpResponse('Unauthorized', status=401)
 
 
 def submit_blog(request):
@@ -219,10 +263,12 @@ def update_blog(request, blog_id):  # Add blog_id parameter
                 return redirect('blog-home')
             else:
                 # Return unauthorized error if the current user is not the author
-                return HttpResponse("Unauthorized", status=401)
+                # return HttpResponse("Unauthorized", status=401)
+                return render(request, 'unauthorized.html')
         else:
             # Handle the case where the request method is not POST
-            return HttpResponse("Method not allowed", status=405)
+            # return HttpResponse("Method not allowed", status=405)
+            return render(request, 'methodnotallowed.html')
     else:
         messages.error(request, "You need to log in to create a blog.")
         return redirect('user-login')
@@ -239,10 +285,12 @@ def delete_blog(request, blog_id):
                 return redirect('blog-home')  # Redirect to the home page after deletion
             else:
                 # Return unauthorized error if the current user is not the author
-                return HttpResponse("Unauthorized", status=401)
+                # return HttpResponse("Unauthorized", status=401)
+                return render(request, 'unauthorized.html')
         else:
             # Handle the case where the request method is not POST
-            return HttpResponse("Method not allowed", status=405)
+            return render(request, 'methodnotallowed.html')
+            # return HttpResponse("Method not allowed", status=405)
     else:
         messages.error(request, "You need to log in to create a blog.")
         return redirect('user-login')
@@ -284,8 +332,8 @@ def send_user_email(request):
             send_mail(
                 "Contact Query of User Submitted",
                 f"Name: {fullname}\nEmail: {useremail}\nContact Number: {usercontact}\nMessage: {usermessage}",
-                "useremail",
-                [yourdefaultmail@email.com],  # Replace with your default email address
+                "amazingsiddhesh@gmail.com",
+                [useremail],  # Replace with your default email address
                 fail_silently=False,
             )
             return render(request, 'contact.html', {'success': 'Contact details submitted successfully !!'})

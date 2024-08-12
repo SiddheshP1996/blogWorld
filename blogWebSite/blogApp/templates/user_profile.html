@@ -5,16 +5,16 @@
 {% block 'main' %}
 
 <!-- ROW 2 STARTS -->
-<div class="container mt-5 pt-5">
+<div class="container mt-5 pt-5 address">
     <h1 class="text-center">User Profile</h1>
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6">
-            <div class="card bg-success-subtle">
+            <div class="card bg-subtle-warning">
                 <div class="card-header">
                     <h3>User Information</h3>
                 </div>
                 <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                         {% csrf_token %}
                         {% if profile_image %}
                         <img src="{{ profile_image.url }}" alt="User Image"
@@ -25,8 +25,9 @@
                             class="img-fluid rounded-circle mx-auto d-block mb-3" style="max-width: 200px;">
                         {% endif %}
                         <label for="image"><strong>Change Profile Image :</strong></label>
-                        <input type="file" name="image" id="image">
-                        <button type="submit" class="btn btn-outline-primary mt-3">Upload Image</button>
+                        <input type="file" name="image" id="image" onchange="toggleUploadButton()">
+                        <button type="submit" id="uploadButton" class="btn btn-outline-primary mt-3">Upload Image</button>
+                        <p id="fileMessage" class="text-danger mt-2" style="display: none; background-color: #f8d7da; padding: 10px; border-radius: 5px;">Please upload a file before submitting.</p>
                         <div class="mb-3">
                             <strong>Update Password : </strong><a class="text-decoration-none text-danger" href="{% url 'reset-password' %}">Update Password </a>
                         </div>
@@ -41,7 +42,7 @@
 
     <!-- Display user's blog entries -->
     <div class="row mt-5">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-8 offset-md-2 address">
             <h2 class="text-center mb-4">Blogs Written by {{ name }}</h2>
             {% if user_blogs %}
             <ul class="list-group">
@@ -56,4 +57,24 @@
     </div>
 </div>
 <!-- ROW 2 ENDS -->
+
+<script>
+    function toggleUploadButton() {
+        var fileInput = document.getElementById('image');
+        var uploadButton = document.getElementById('uploadButton');
+        uploadButton.disabled = fileInput.files.length === 0;
+    }
+    function validateForm() {
+        var fileInput = document.getElementById('image');
+        var message = document.getElementById('fileMessage');
+        if (fileInput.files.length === 0) {
+            message.style.display = 'block';
+            return false; // Prevent form submission
+        } else {
+            message.style.display = 'none';
+            return true; // Allow form submission
+        }
+    }
+</script>
+
 {% endblock 'main' %}

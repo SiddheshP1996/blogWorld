@@ -7,7 +7,7 @@
 <!-- ROW 2 STARTS -->
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-6 pt-5">
+        <div class="col-md-6 pt-5 address">
             <form id="blogForm" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="col-md-10 mb-3">
@@ -29,7 +29,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 pt-5">
             <img src="{% static './asset/images/blog-2.jpg' %}" class="rounded float-end" width="90%" alt="...">
         </div>
     </div>
@@ -60,6 +60,9 @@
                 console.log(data);
                 // Optionally, clear the form fields
                 document.getElementById('blogForm').reset();
+
+                // Redirect to the home page
+                window.location.href = "{% url 'blog-home' %}";
             })
             .catch(function (error) {
                 // Error
@@ -67,4 +70,5 @@
             });
     });
 </script>
+
 {% endblock 'main' %}

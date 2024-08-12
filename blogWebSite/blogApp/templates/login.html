@@ -7,7 +7,7 @@
 <!-- ROW 2 STARTS -->
 <div class="container pt-5">
     <div class="row mt-5 mb-5">
-        <div class="col-md-4 shadow mt-5 p-4 mx-auto bg-info-subtle rounded-4">
+        <div class="col-md-4 shadow-lg mt-5 p-4 mx-auto theme-bg rounded-4">
             <!-- <h2 style="text-align: center;">Registration</h2> -->
             <h2 class="text-center">Login</h2>
             {% if errormessage %}
@@ -27,13 +27,52 @@
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-danger" value="Login">
-                    Not a User? <a href="/register" style="text-decoration: none;">Register</a>
+                    Not a User? <a href="/register" style="text-decoration: none; color:#fec405">Register</a>
                     <br><br>
-                    <a class="text-decoration-none" href="{% url 'reset-password' %}">Forget Password? </a>
+                    <a class="text-decoration-none" style="color:#fec405" href="{% url 'reset-password' %}">Forget Password? </a>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- ROW 2 ENDS -->
+
+<script>
+    // Function to set the theme based on user preference stored in local storage
+    function setTheme(theme) {
+        const themeBg = document.querySelector('.theme-bg');
+        if (theme === 'dark-mode') {
+            themeBg.style.backgroundColor = '#332929';  // Dark background color
+            themeBg.style.color = '#ffffff';            // Light text color
+        } else if (theme === 'light-mode') {
+            themeBg.style.backgroundColor = '#f2faff70';  // Light background color
+            themeBg.style.color = '#000000';            // Dark text color
+        }
+    }
+
+    // Function to detect and apply the user's theme preference from local storage
+    function detectTheme() {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+            setTheme(storedTheme);
+        } else {
+            // Default to light theme if no preference is stored
+            setTheme('light-mode');
+        }
+    }
+
+    // Call the function to set the initial theme
+    detectTheme();
+
+    // Example: If you have a button to switch themes, you can add this:
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+        let currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark-mode') {
+            localStorage.setItem('theme', 'light-mode');
+        } else {
+            localStorage.setItem('theme', 'dark-mode');
+        }
+        detectTheme(); // Reapply the theme based on the new selection
+    });
+</script>
 {% endblock 'main' %}
