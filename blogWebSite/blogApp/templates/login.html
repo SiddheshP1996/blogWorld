@@ -8,7 +8,6 @@
 <div class="container pt-5">
     <div class="row mt-5 mb-5">
         <div class="col-md-4 shadow-lg mt-5 p-4 mx-auto theme-bg rounded-4">
-            <!-- <h2 style="text-align: center;">Registration</h2> -->
             <h2 class="text-center">Login</h2>
             {% if errormessage %}
                 <div class="alert alert-danger">
@@ -21,15 +20,16 @@
                     <label for="Input1" class="form-label"><strong> Useremail : </strong></label>
                     <input type="email" class="form-control" id="Input1" name="username" placeholder="Your registered email">
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 position-relative">
                     <label for="Input2" class="form-label"><strong> Password : </strong></label>
                     <input type="password" class="form-control" id="Input2" name="userpassword" placeholder="Enter Password">
+                    <i class="bi bi-eye position-absolute" id="toggle-password" title="View Password" style="cursor: pointer; right: 10px; top: 73%; transform: translateY(-50%);"></i>
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="btn btn-danger" value="Login">
-                    Not a User? <a href="/register" style="text-decoration: none; color:#fec405">Register</a>
+                    Not a User? <a href="/register" style="text-decoration: none; color: orangered">Register</a>
                     <br><br>
-                    <a class="text-decoration-none" style="color:#fec405" href="{% url 'reset-password' %}">Forget Password? </a>
+                    <a class="text-decoration-none" style="color: orangered" href="{% url 'reset-password' %}">Forget Password? </a>
                 </div>
             </form>
         </div>
@@ -41,12 +41,20 @@
     // Function to set the theme based on user preference stored in local storage
     function setTheme(theme) {
         const themeBg = document.querySelector('.theme-bg');
+        const icons = document.querySelectorAll('.bi-eye, .bi-eye-slash');
+
         if (theme === 'dark-mode') {
             themeBg.style.backgroundColor = '#332929';  // Dark background color
             themeBg.style.color = '#ffffff';            // Light text color
+            icons.forEach(icon => {
+                icon.style.color = '#000000';           // Light color for icons in dark mode
+            });
         } else if (theme === 'light-mode') {
             themeBg.style.backgroundColor = '#f2faff70';  // Light background color
             themeBg.style.color = '#000000';            // Dark text color
+            icons.forEach(icon => {
+                icon.style.color = '#000000';           // Dark color for icons in light mode
+            });
         }
     }
 
@@ -63,6 +71,23 @@
 
     // Call the function to set the initial theme
     detectTheme();
+
+    // Toggle password visibility and icon
+    document.getElementById('toggle-password').addEventListener('click', function () {
+        const passwordInput = document.getElementById('Input2');
+        const icon = this;
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+            icon.setAttribute('title', 'Hide Password');  // Set title to 'Hide Password'
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+            icon.setAttribute('title', 'View Password');  // Set title to 'View Password'
+        }
+    });
 
     // Example: If you have a button to switch themes, you can add this:
     document.getElementById('theme-toggle').addEventListener('click', function () {

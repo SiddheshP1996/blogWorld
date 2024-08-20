@@ -4,6 +4,22 @@
 
 {% block 'main' %}
 
+<style>
+    /* Light Mode (default) */
+    .theme-textarea {
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid #cccccc;
+    }
+
+    /* Dark Mode */
+    .dark-mode .theme-textarea {
+        background-color: #495057;
+        color: #ffffff;
+        border: 1px solid #6c757d;
+    }
+</style>
+
 <!-- ROW 2 STARTS -->
 <div class="container col-md-6 p-5 mt-5">
     <div class="card">
@@ -13,7 +29,7 @@
         <div class="card-body">
             <h5 class="card-title">blogWorld</h5>
             <p class="card-text">Welcome to blogWorld</p>
-            <p class="form-control" id="textarea" rows="1">Do You want to write your own Blog?</p>
+            <p class="form-control theme-textarea" id="textarea" rows="1">Do You want to write your own Blog?</p>
             <a href="{% url 'create_blog' %}" class="btn btn-outline-primary mt-3">Create Blog</a>
         </div>
     </div>
@@ -38,4 +54,22 @@
     {% endfor %}
 </div>
 <!-- ROW 2 ENDS -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleDarkMode = () => {
+            const textarea = document.getElementById('textarea');
+            textarea.classList.toggle('dark-mode', document.body.classList.contains('dark-mode'));
+        };
+
+        // Set initial state
+        toggleDarkMode();
+
+        // Toggle dark mode on button click
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            toggleDarkMode();
+        });
+    });
+</script>
 {% endblock 'main' %}
